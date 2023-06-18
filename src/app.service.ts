@@ -22,19 +22,19 @@ export class AppService {
     //   data: total,
     //   message: 'this is block service',
     // };
-    // const workerPromise: Promise<number> = new Promise<number>(
-    //   (resolve, reject) => {
-    //     const worker = new Worker(path.join(__dirname, './worker.js'));
-    //     worker.on('message', (data: number) => {
-    //       resolve(data);
-    //     });
-    //     worker.on('error', (error) => {
-    //       reject(error);
-    //     });
-    //   },
-    // );
-    // const count = await workerPromise;
-    const count = heavilyJob();
+    const workerPromise: Promise<number> = new Promise<number>(
+      (resolve, reject) => {
+        const worker = new Worker(path.join(__dirname, './worker.js'));
+        worker.on('message', (data: number) => {
+          resolve(data);
+        });
+        worker.on('error', (error) => {
+          reject(error);
+        });
+      },
+    );
+    const count = await workerPromise;
+    // const count = heavilyJob();
     return {
       count,
       message: 'this is block service',
